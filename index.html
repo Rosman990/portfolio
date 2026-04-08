@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rosman's Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --ink: #1a2420;
+      --paper: #f0f5f3;
+      --warm: #d4e8e0;
+      --accent: #2e7d5e;
+      --accent2: #a8d5c2;
+      --mint: #b8e0d2;
+      --muted: #6b8079;
+      --card: #f7faf9;
+      --border: #c2d8d0;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'DM Mono', monospace;
+      font-weight: 300;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 2.5rem;
+      background: rgba(240, 245, 243, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Fraunces', serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 2.5rem 5rem;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(160deg, #e8f4ef 0%, #f0f5f3 60%, #dceee7 100%);
+    }
+
+    /* Decorative geometric accent */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 10%;
+      right: -80px;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(184,224,210,0.45) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-rule {
+      width: 48px;
+      height: 2px;
+      background: var(--accent);
+      margin-bottom: 1.75rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.1s ease forwards;
+    }
+
+    .hero-content {
+      position: relative;
+      max-width: 820px;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.75rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.25s ease forwards;
+    }
+
+    /* Each title line is its own row with a subtle left border accent */
+    .hero-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 300;
+      letter-spacing: -0.03em;
+      margin-bottom: 0;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.4s ease forwards;
+    }
+
+    .hero-line {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-line:first-child { border-top: 1px solid var(--border); }
+
+    .hero-line-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--accent2);
+      letter-spacing: 0.1em;
+      min-width: 1.5rem;
+      opacity: 0.7;
+    }
+
+    .hero-line-text {
+      font-size: clamp(2rem, 5.5vw, 4.2rem);
+      line-height: 1.1;
+    }
+
+    .hero-line-text.italic {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-line-tag {
+      margin-left: auto;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0.6;
+      white-space: nowrap;
+    }
+
+    .hero-desc {
+      font-size: 0.8rem;
+      line-height: 1.9;
+      color: var(--muted);
+      max-width: 440px;
+      margin-top: 2.5rem;
+      margin-bottom: 2.75rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.6s ease forwards;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.9rem 2rem;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: background 0.2s;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.8s ease forwards;
+    }
+
+    .hero-cta:hover { background: var(--ink); }
+
+    .hero-cta svg { transition: transform 0.2s; }
+    .hero-cta:hover svg { transform: translateX(4px); }
+
+    /* ── FILTER BAR ── */
+    .filter-section {
+      padding: 4rem 2.5rem 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .filter-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .filter-bar {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 0.5rem 1.25rem;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--ink);
+      color: var(--paper);
+      border-color: var(--ink);
+    }
+
+    .filter-btn.active { cursor: default; }
+
+    /* ── GRID ── */
+    .grid-section {
+      padding: 2rem 2.5rem 6rem;
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(13,12,10,0.1);
+    }
+
+    .card-media {
+      width: 100%;
+      aspect-ratio: 16/10;
+      overflow: hidden;
+      position: relative;
+      background: var(--warm);
+    }
+
+    .card-media img,
+    .card-media video {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .card:hover .card-media img,
+    .card:hover .card-media video { transform: scale(1.04); }
+
+    .card-type-badge {
+      position: absolute;
+      top: 0.75rem; right: 0.75rem;
+      padding: 0.3rem 0.65rem;
+      font-size: 0.55rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 400;
+    }
+
+    .badge-pdf { background: #2e7d5e; color: white; }
+    .badge-image { background: #4a9e82; color: white; }
+    .badge-video { background: #5a6e68; color: white; }
+
+    .card-body {
+      padding: 1.25rem 1.5rem 1.5rem;
+    }
+
+    .card-category {
+      font-size: 0.55rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+    }
+
+    .card-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.15rem;
+      font-weight: 500;
+      line-height: 1.25;
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.01em;
+    }
+
+    .card-desc {
+      font-size: 0.7rem;
+      line-height: 1.7;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .card-date {
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .card-link {
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: color 0.2s;
+    }
+
+    .card-link:hover { color: var(--accent); }
+
+    /* PDF placeholder */
+    .pdf-placeholder {
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, #dff0ea 0%, #c8e0d8 100%);
+    }
+
+    .pdf-icon {
+      font-size: 2.5rem;
+      line-height: 1;
+    }
+
+    .pdf-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* empty state */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--muted);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      display: none;
+    }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(13,12,10,0.75);
+      backdrop-filter: blur(6px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: var(--card);
+      border: 1px solid var(--border);
+      max-width: 800px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: translateY(20px);
+      transition: transform 0.3s;
+    }
+
+    .modal-overlay.open .modal { transform: translateY(0); }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 1.5rem 1.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.4rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 1.25rem;
+      line-height: 1;
+      padding: 0.25rem;
+      transition: color 0.2s;
+    }
+
+    .modal-close:hover { color: var(--accent); }
+
+    .modal-body { padding: 1.75rem; }
+
+    .modal-media {
+      width: 100%;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .modal-media img,
+    .modal-media video {
+      width: 100%;
+      display: block;
+      max-height: 420px;
+      object-fit: contain;
+      background: var(--warm);
+    }
+
+    .modal-meta {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .modal-meta-item {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+
+    .modal-meta-item strong {
+      display: block;
+      color: var(--ink);
+      font-weight: 400;
+      margin-bottom: 0.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.55rem;
+    }
+
+    .modal-desc {
+      font-size: 0.78rem;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      padding: 0.75rem 1.5rem;
+      background: var(--ink);
+      color: var(--paper);
+      border: none;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background 0.2s;
+    }
+
+    .btn-primary:hover { background: var(--accent); }
+
+    .btn-ghost {
+      padding: 0.75rem 1.5rem;
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-ghost:hover { border-color: var(--ink); color: var(--ink); }
+
+    /* ── UPLOAD SECTION ── */
+    .upload-section {
+      margin: 0 2.5rem 6rem;
+      padding: 2rem;
+      border: 1px dashed var(--border);
+      text-align: center;
+      background: rgba(240,245,243,0.5);
+    }
+
+    .upload-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .upload-sub {
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      margin-bottom: 1.25rem;
+    }
+
+    .upload-drop {
+      padding: 2rem;
+      border: 1px solid var(--border);
+      background: var(--card);
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+      margin-bottom: 1rem;
+    }
+
+    .upload-drop:hover,
+    .upload-drop.drag-over {
+      border-color: var(--accent);
+      background: #edf7f3;
+    }
+
+    .upload-drop input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .upload-drop-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+
+    .upload-drop-text {
+      font-size: 0.7rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .upload-drop-text span { color: var(--accent); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      font-family: 'Fraunces', serif;
+      font-size: 0.9rem;
+      color: var(--ink);
+    }
+
+    .footer-logo span { color: var(--accent); }
+
+    .footer-copy {
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { display: none; }
+      .hero { padding: 7rem 1.25rem 3rem; }
+      .filter-section, .grid-section { padding-left: 1.25rem; padding-right: 1.25rem; }
+      .upload-section { margin-left: 1.25rem; margin-right: 1.25rem; }
+      footer { padding: 1.5rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Rosman's Portfolio<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="/cdn-cgi/l/email-protection#acd5c3d9ecc9c1cdc5c082cfc3c1">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-rule"></div>
+      <p class="hero-eyebrow">Rosman Palacios &nbsp;·&nbsp; Content, Strategy & Digital</p>
+      <div class="hero-title">
+        <div class="hero-line">
+          <span class="hero-line-num">01</span>
+          <span class="hero-line-text">Content</span>
+          <span class="hero-line-tag">Writing &amp; Copy</span>
+        </div>
+        <div class="hero-line">
+          <span class="hero-line-num">02</span>
+          <span class="hero-line-text">Strategy</span>
+          <span class="hero-line-tag">Planning &amp; Systems</span>
+        </div>
+        <div class="hero-line">
+          <span class="hero-line-num">03</span>
+          <span class="hero-line-text italic">Digital.</span>
+          <span class="hero-line-tag">Adoption &amp; Tools</span>
+        </div>
+      </div>
+      <p class="hero-desc">
+        A curated collection of work spanning communications, knowledge management, and digital adoption. PDFs, visuals, and video — all in one place.
+      </p>
+      <a href="#work" class="hero-cta">
+        View Work
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- FILTER -->
+  <section class="filter-section" id="work">
+    <p class="filter-label">Filter by type</p>
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="pdf">PDFs</button>
+      <button class="filter-btn" data-filter="video">Video</button>
+      <button class="filter-btn" data-filter-cat="Training">Training</button>
+      <button class="filter-btn" data-filter-cat="Communications">Communications</button>
+      <button class="filter-btn" data-filter-cat="Knowledge Management">Knowledge Management</button>
+      <button class="filter-btn" data-filter="image">Images</button>
+      <button class="filter-btn" data-filter-cat="Digital Adoption">Digital Adoption</button>
+      <button class="filter-btn" data-filter-cat="Videography">Videography</button>
+    </div>
+  </section>
+
+  <!-- GRID -->
+  <section class="grid-section">
+    <div class="portfolio-grid" id="portfolioGrid">
+      <!-- Sample cards injected by JS -->
+      <div class="empty-state" id="emptyState">No items in this category yet.</div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Rosman's Portfolio<span>.</span></div>
+    <p class="footer-copy">NYC · Content Strategy · Knowledge Management · Digital Adoption</p>
+  </footer>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle"></h2>
+        <button class="modal-close" onclick="closeModalDirect()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-media" id="modalMedia"></div>
+        <div class="modal-meta" id="modalMeta"></div>
+        <p class="modal-desc" id="modalDesc"></p>
+        <div class="modal-actions" id="modalActions"></div>
+      </div>
+    </div>
+  </div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // ── DATA STORE ──
+  let portfolio = [];
+  let currentFilter = 'all';
+  let currentCatFilter = null;
+  let pendingFile = null;
+  let pendingURL = null;
+  let pendingType = null;
+
+  // ── PORTFOLIO DATA ──
+  const samples = [
+    // ── PDFs ──
+    {
+      id: 'p1',
+      title: 'Aon Global UTM Builder Quick Guide',
+      category: 'Training',
+      type: 'pdf',
+      desc: 'This training was conducted to help Marketers understand the importance of UTMs.',
+      date: '2023',
+      url: 'pdfs/Aon_Global_UTM_Builder_Quick_Guide.pdf',
+      sample: false,
+    },
+    {
+      id: 'p2',
+      title: 'Aon Policy – Creation of New Aon Social Media Accounts',
+      category: 'Communications',
+      type: 'pdf',
+      desc: 'Standard Operating Procedure published on the Intranet and made findable for reuse across the Digital Marketing Center of Excellence.',
+      date: '2023',
+      url: 'pdfs/Aon_Policy-Creation_of_New_Aon_Social_Media_Accounts.pdf',
+      sample: false,
+    },
+    {
+      id: 'p3',
+      title: 'Creating and Scheduling Social Media Posts on Hootsuite',
+      category: 'Training',
+      type: 'pdf',
+      desc: 'Document tailored for a specific audience.',
+      date: '2023',
+      url: 'pdfs/Creating_and_Scheduling_Social_Media_posts_Hootsuite-Quick_Guide.pdf',
+      sample: false,
+    },
+    {
+      id: 'p4',
+      title: 'Smart Energy Plan – Enrollment & De-Enrollment Guide',
+      category: 'Knowledge Management',
+      type: 'pdf',
+      desc: 'Document tailored for a specific audience.',
+      date: '2025',
+      url: 'pdfs/Smart_Energy_Plan_Enrollment_De_Enrollment_Guide.pdf',
+      sample: false,
+    },
+    {
+      id: 'p5',
+      title: 'SEP Bill Comparison – English (2026)',
+      category: 'Communications',
+      type: 'pdf',
+      desc: 'Document tailored for a specific audience.',
+      date: '2026',
+      url: 'pdfs/SEP_Bill_Comparison_EN26-02.pdf',
+      sample: false,
+    },
+    {
+      id: 'p6',
+      title: 'SEP Bill Comparison – Spanish (2026)',
+      category: 'Communications',
+      type: 'pdf',
+      desc: 'Document tailored for a specific audience.',
+      date: '2026',
+      url: 'pdfs/SEP_Bill_Comparison__SP26-02.pdf',
+      sample: false,
+    },
+    {
+      id: 'p7',
+      title: 'Bill Comparison – English',
+      category: 'Communications',
+      type: 'pdf',
+      desc: 'Document tailored for a specific audience.',
+      date: '2025',
+      url: 'pdfs/Bill_Comparison_EN.pdf',
+      sample: false,
+    },
+    {
+      id: 'p8',
+      title: 'Bill Comparison – Spanish',
+      category: 'Communications',
+      type: 'pdf',
+      desc: 'Document tailored for a specific audience.',
+      date: '2025',
+      url: 'pdfs/Bill_Comparison_SP.pdf',
+      sample: false,
+    },
+    {
+      id: 'p9',
+      title: 'January IPP Ongoing Communications – English',
+      category: 'Communications',
+      type: 'pdf',
+      desc: 'Document tailored for a specific audience.',
+      date: '2026',
+      url: 'pdfs/January_IPP_Ongoing_Comms_EN.pdf',
+      sample: false,
+    },
+    // ── Images ──
+    {
+      id: 'i1',
+      title: 'Foosball at NYC Health + Hospitals',
+      category: 'Photography',
+      type: 'image',
+      desc: 'Shot and edited by Rosman.',
+      date: '2022',
+      url: 'images/foosball.jpg',
+      sample: false,
+    },
+    {
+      id: 'i2',
+      title: 'Spread Love – NYC Health + Hospitals',
+      category: 'Photography',
+      type: 'image',
+      desc: 'Shot and edited by Rosman.',
+      date: '2022',
+      url: 'images/spread-love.jpg',
+      sample: false,
+    },
+    {
+      id: 'i3',
+      title: 'Mariachi Performance – Metropolitan Hospital',
+      category: 'Photography',
+      type: 'image',
+      desc: 'Shot and edited by Rosman.',
+      date: '2022',
+      url: 'images/mariachi.jpg',
+      sample: false,
+    },
+    {
+      id: 'i4',
+      title: 'Community Celebration – Metropolitan Hospital',
+      category: 'Photography',
+      type: 'image',
+      desc: 'Shot and edited by Rosman.',
+      date: '2022',
+      url: 'images/celebration.jpg',
+      sample: false,
+    },
+    {
+      id: 'i5',
+      title: 'Rate Engineering Intranet Redesign',
+      category: 'Digital Adoption',
+      type: 'image',
+      desc: 'Before and after SharePoint migration — redesigning the Rate Engineering intranet from SharePoint 2016 to SharePoint Online.',
+      date: '2026',
+      url: 'images/intranet-redesign.jpeg',
+      sample: false,
+    },
+    // ── Videos ──
+    {
+      id: 'v1',
+      title: 'Video',
+      category: 'Videography',
+      type: 'video',
+      desc: 'Shot and edited by Rosman.',
+      date: '2024',
+      url: 'videos/video-1.mp4',
+      sample: false,
+    },
+    {
+      id: 'v2',
+      title: 'Video',
+      category: 'Videography',
+      type: 'video',
+      desc: 'Shot and edited by Rosman.',
+      date: '2024',
+      url: 'videos/video-2.mp4',
+      sample: false,
+    },
+  ];
+
+  portfolio = [...samples];
+
+  // ── RENDER ──
+  function renderGrid() {
+    const grid = document.getElementById('portfolioGrid');
+    const empty = document.getElementById('emptyState');
+    let items = portfolio;
+    if (currentFilter !== 'all') items = items.filter(p => p.type === currentFilter);
+    if (currentCatFilter) items = items.filter(p => p.category === currentCatFilter);
+
+    // Remove existing cards
+    grid.querySelectorAll('.card').forEach(c => c.remove());
+
+    if (items.length === 0) {
+      empty.style.display = 'block';
+      return;
+    }
+    empty.style.display = 'none';
+
+    items.forEach((item, i) => {
+      const card = createCard(item, i);
+      grid.appendChild(card);
+    });
+  }
+
+  function createCard(item, delay) {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.style.animationDelay = `${delay * 0.07}s`;
+    card.onclick = () => openModal(item);
+
+    const badgeClass = `badge-${item.type}`;
+    const badgeLabel = item.type.toUpperCase();
+
+    let mediaHTML = '';
+    if (item.type === 'image' && item.url) {
+      mediaHTML = `<img src="${item.url}" alt="${item.title}" loading="lazy"/>`;
+    } else if (item.type === 'video' && item.url) {
+      mediaHTML = `<video src="${item.url}" muted preload="metadata"></video>`;
+    } else if (item.type === 'pdf') {
+      mediaHTML = `<div class="pdf-placeholder"><div class="pdf-icon">📄</div><div class="pdf-label">PDF Document</div></div>`;
+    } else if (item.type === 'image') {
+      mediaHTML = `<div class="pdf-placeholder" style="background:linear-gradient(135deg,#d4eae2,#bdd8ce)"><div class="pdf-icon">🖼</div><div class="pdf-label">Image</div></div>`;
+    } else {
+      mediaHTML = `<div class="pdf-placeholder" style="background:linear-gradient(135deg,#d0dedd,#bccece)"><div class="pdf-icon">🎬</div><div class="pdf-label">Video</div></div>`;
+    }
+
+    card.innerHTML = `
+      <div class="card-media">
+        ${mediaHTML}
+        <span class="card-type-badge ${badgeClass}">${badgeLabel}</span>
+      </div>
+      <div class="card-body">
+        <p class="card-category">${item.category}</p>
+        <h3 class="card-title">${item.title}</h3>
+        <p class="card-desc">${item.desc.length > 100 ? item.desc.slice(0, 100) + '…' : item.desc}</p>
+        <div class="card-footer">
+          <span class="card-date">${item.date}</span>
+          <span class="card-link">View
+            <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </div>
+    `;
+    return card;
+  }
+
+  // ── FILTER ──
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      if (btn.dataset.filter) {
+        currentFilter = btn.dataset.filter;
+        currentCatFilter = null;
+      } else if (btn.dataset.filterCat) {
+        currentCatFilter = btn.dataset.filterCat;
+        currentFilter = 'all';
+      }
+      renderGrid();
+    });
+  });
+
+  // ── MODAL ──
+  function openModal(item) {
+    const overlay = document.getElementById('modalOverlay');
+    document.getElementById('modalTitle').textContent = item.title;
+
+    let mediaHTML = '';
+    if (item.type === 'image' && item.url) {
+      mediaHTML = `<img src="${item.url}" alt="${item.title}"/>`;
+    } else if (item.type === 'video' && item.url) {
+      mediaHTML = `<video src="${item.url}" controls style="width:100%;max-height:420px;background:#000;"></video>`;
+    } else if (item.type === 'pdf' && item.url) {
+      mediaHTML = `<iframe src="${item.url}" style="width:100%;height:420px;border:none;" title="${item.title}"></iframe>`;
+    } else {
+      const icons = { pdf:'📄', image:'🖼', video:'🎬' };
+      const bgs   = { pdf:'linear-gradient(135deg,#dff0ea,#c8e0d8)', image:'linear-gradient(135deg,#d4eae2,#bdd8ce)', video:'linear-gradient(135deg,#d0dedd,#bccece)' };
+      mediaHTML = `<div style="height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.5rem;background:${bgs[item.type]}"><div style="font-size:3rem">${icons[item.type]}</div><div style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted)">Sample placeholder — replace with your file</div></div>`;
+    }
+    document.getElementById('modalMedia').innerHTML = mediaHTML;
+
+    document.getElementById('modalMeta').innerHTML = `
+      <div class="modal-meta-item"><strong>Type</strong>${item.type.toUpperCase()}</div>
+      <div class="modal-meta-item"><strong>Category</strong>${item.category}</div>
+      <div class="modal-meta-item"><strong>Year</strong>${item.date}</div>
+    `;
+
+    document.getElementById('modalDesc').textContent = item.desc;
+
+    let actions = '';
+    if (item.url && item.type === 'pdf') {
+      actions += `<a class="btn-primary" href="${item.url}" target="_blank" download>↓ Download PDF</a>`;
+    }
+    if (!item.sample) {
+      actions += `<button class="btn-ghost" onclick="removeItem('${item.id}')">Remove</button>`;
+    }
+    document.getElementById('modalActions').innerHTML = actions || '<span style="font-size:0.65rem;color:var(--muted);letter-spacing:0.08em;">Add your file to enable downloads.</span>';
+
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModalDirect();
+  }
+
+  function closeModalDirect() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+    document.getElementById('modalMedia').innerHTML = '';
+  }
+
+  function removeItem(id) {
+    portfolio = portfolio.filter(p => p.id !== id);
+    closeModalDirect();
+    renderGrid();
+  }
+
+  // ── UPLOAD ──
+  const dropZone = document.getElementById('dropZone');
+  const fileInput = document.getElementById('fileInput');
+
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('drag-over');
+    handleFiles(e.dataTransfer.files);
+  });
+  fileInput.addEventListener('change', () => handleFiles(fileInput.files));
+
+  function handleFiles(files) {
+    if (!files.length) return;
+    // Handle first file; loop for multi
+    Array.from(files).forEach(file => prepareUpload(file));
+  }
+
+  function prepareUpload(file) {
+    const ext = file.name.split('.').pop().toLowerCase();
+    let type = 'image';
+    if (ext === 'pdf') type = 'pdf';
+    else if (['mp4','mov','webm','avi','mkv'].includes(ext)) type = 'video';
+
+    const url = URL.createObjectURL(file);
+    pendingFile = file;
+    pendingURL = url;
+    pendingType = type;
+
+    // Pre-fill title
+    document.getElementById('uploadTitle').value = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
+    document.getElementById('uploadForm').style.display = 'block';
+    dropZone.style.display = 'none';
+  }
+
+  function confirmUpload() {
+    const title = document.getElementById('uploadTitle').value.trim() || 'Untitled';
+    const category = document.getElementById('uploadCategory').value.trim() || 'Portfolio';
+    const desc = document.getElementById('uploadDesc').value.trim() || '';
+    const year = new Date().getFullYear().toString();
+
+    portfolio.unshift({
+      id: 'u' + Date.now(),
+      title, category, type: pendingType,
+      desc, date: year, url: pendingURL, sample: false
+    });
+
+    renderGrid();
+    cancelUpload();
+    document.getElementById('work').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function cancelUpload() {
+    document.getElementById('uploadForm').style.display = 'none';
+    dropZone.style.display = 'block';
+    document.getElementById('uploadTitle').value = '';
+    document.getElementById('uploadCategory').value = '';
+    document.getElementById('uploadDesc').value = '';
+    fileInput.value = '';
+    pendingFile = null; pendingURL = null; pendingType = null;
+  }
+
+  // ── INIT ──
+  renderGrid();
+</script>
+</body>
+</html>
